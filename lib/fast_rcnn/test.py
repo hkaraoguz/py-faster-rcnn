@@ -162,14 +162,31 @@ def im_detect(net, im, boxes=None):
     if cfg.TEST.SVM:
         # use the raw scores before softmax under the assumption they
         # were trained as linear SVMs
-        scores = net.blobs['cls_score'].data
+        keys = net.blobs.keys()
+        #set the default key
+        cls_score_key = 'cls_score'
+        #if we find akey that starts with cls_score
+        for key in keys:
+            if(key.find("cls_score") == 0):
+                cls_score_key = key
+                break
+
+
+        scores = net.blobs[cls_score_key].data
     else:
         # use softmax estimated probabilities
         scores = blobs_out['cls_prob']
 
     if cfg.TEST.BBOX_REG:
+        keys = net.params.keys()
+        # If a key starts with name bbox_pred
+        bbox_pred_key = 'bbox_pred'
+        for key in keys:
+            if(key.find('bbox_pred') == 0):
+                bbox_pred_key = key
+                break
         # Apply bounding-box regression deltas
-        box_deltas = blobs_out['bbox_pred']
+        box_deltas = blobs_out[bbox_pred_key]
         pred_boxes = bbox_transform_inv(boxes, box_deltas)
         pred_boxes = clip_boxes(pred_boxes, im.shape)
     else:
