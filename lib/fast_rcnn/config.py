@@ -192,8 +192,11 @@ __C.ROOT_DIR = osp.abspath(osp.join(osp.dirname(__file__), '..', '..'))
 # Data directory
 __C.DATA_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'data'))
 
+# Model subdirectory
+__C.MODELS_SUBDIR = 'pascal_voc'
+
 # Model directory
-__C.MODELS_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'models', 'pascal_voc'))
+__C.MODELS_DIR = osp.abspath(osp.join(__C.ROOT_DIR, 'models', __C.MODELS_SUBDIR))
 
 # Name (or path to) the matlab executable
 __C.MATLAB = 'matlab'
