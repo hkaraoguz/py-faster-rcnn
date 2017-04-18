@@ -256,6 +256,8 @@ def _merge_a_into_b(a, b):
                 raise
         else:
             b[k] = v
+            if k == 'MODELS_SUBDIR':
+                b['MODELS_DIR'] = osp.abspath(osp.join(b['ROOT_DIR'], 'models', b[k]))
 
 def cfg_from_file(filename):
     """Load a config file and merge it into the default options."""
