@@ -181,7 +181,8 @@ def im_detect(net, im, boxes=None):
         keys = net.params.keys()
         # If a key starts with name bbox_pred
         bbox_pred_key = 'bbox_pred'
-        for key in keys:
+        ## Since keys dictionary is ordered we can do a reverse search to get the name of the bbox blob
+        for key in keys[::-1]:
             if(key.find('bbox_pred') == 0):
                 bbox_pred_key = key
                 break
