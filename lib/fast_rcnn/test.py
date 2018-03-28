@@ -178,11 +178,12 @@ def im_detect(net, im, boxes=None):
         scores = blobs_out['cls_prob']
 
     if cfg.TEST.BBOX_REG:
-        keys = net.params.keys()
+        keys = net.blobs.keys()
+        keys = keys[::-1]
         # If a key starts with name bbox_pred
         bbox_pred_key = 'bbox_pred'
         ## Since keys dictionary is ordered we can do a reverse search to get the name of the bbox blob
-        for key in keys[::-1]:
+        for key in keys:
             if(key.find('bbox_pred') == 0):
                 bbox_pred_key = key
                 break
